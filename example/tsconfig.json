@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "workshops-charts": ["../src/index"],
+      "workshops-charts/*": ["../src/*"]
+    }
+  }
+}
