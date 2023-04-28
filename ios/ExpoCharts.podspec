@@ -3,7 +3,7 @@ require 'json'
 package = JSON.parse(File.read(File.join(__dir__, '..', 'package.json')))
 
 Pod::Spec.new do |s|
-  s.name           = 'Charts'
+  s.name           = 'ExpoCharts'
   s.version        = package['version']
   s.summary        = package['description']
   s.description    = package['description']
@@ -24,4 +24,6 @@ Pod::Spec.new do |s|
   }
   
   s.source_files = "**/*.{h,m,swift}"
+
+  s.dependency 'Charts'
 end

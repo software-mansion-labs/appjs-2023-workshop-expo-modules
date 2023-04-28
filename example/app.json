@@ -6,10 +6,11 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "jsEngine": "hermes",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#282a36"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,7 +22,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#282a36"
       },
       "package": "expo.modules.workshopscharts.example"
     },
