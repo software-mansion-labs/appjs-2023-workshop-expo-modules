@@ -1,9 +1,12 @@
 {
-  "platforms": ["ios", "android", "web"],
+  "platforms": ["ios", "android"],
   "ios": {
-    "modules": ["ChartsModule"]
+    "modules": ["ChartsModule", "LinearChartModule"]
   },
   "android": {
-    "modules": ["expo.modules.workshopscharts.ChartsModule"]
+    "modules": [
+      "expo.modules.workshopscharts.ChartsModule", 
+      "expo.modules.workshopscharts.LinearChartModule"
+    ]    
   }
 }
