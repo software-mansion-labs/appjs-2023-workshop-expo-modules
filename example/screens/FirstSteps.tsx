@@ -1,4 +1,4 @@
-import { View, FlatList, Text, Alert, StyleSheet } from "react-native";
+import { View, Alert, StyleSheet } from "react-native";
 import React from "react";
 import Colors from "../Colors";
 import Button from "../components/Button";

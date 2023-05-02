@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import FunctionTestCase, {
   FunctionTestCaseProps,
 } from "../components/FunctionTestCase";

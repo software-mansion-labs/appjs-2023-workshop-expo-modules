@@ -1,4 +1,4 @@
-import { View, FlatList, Text } from "react-native";
+import { View, FlatList } from "react-native";
 import { RootStackParamList, screenList } from "./Screens";
 import React from "react";
 import { NavigationProp, useNavigation } from "@react-navigation/native";

@@ -1,4 +1,4 @@
-import { View, ScrollView, Text, Alert } from "react-native";
+import { View, ScrollView, Alert } from "react-native";
 import {
   LinearChartView,
   DataMode,

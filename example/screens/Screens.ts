@@ -1,8 +1,8 @@
 import { Platform } from "expo-modules-core";
-import LinearChartBasicData from "./LinearChartBasicData";
-import LinearChartEvents from "./LinearChartEvents";
-import LinearChartProps from "./LinearChartProps";
-import LinearChartViewFunctions from "./LinearChartViewFunctions";
+import ChartBasicData from "./ChartBasicData";
+import ViewEvents from "./ViewEvents";
+import ViewProps from "./ViewProps";
+
 import NativeModule from "./NativeModule";
 import SharedDataSet from "./SharedDataSet";
 import SharedObjects from "./SharedObjects";
@@ -13,24 +13,24 @@ export const screens = [
   { name: "First steps", text: "👶 First steps", component: FirstSteps },
   { name: "Native Module", text: "⚙️ Native Module", component: NativeModule },
   {
-    name: "Linear Chart Basic Data",
-    text: "📈 Linear Chart Basic Data",
-    component: LinearChartBasicData,
+    name: "Passing Data To View",
+    text: "📈 Passing Data To View",
+    component: ChartBasicData,
   },
   {
-    name: "Linear Chart Props",
-    text: "📚 Linear Chart Props",
-    component: LinearChartProps,
+    name: "View Props",
+    text: "📚 View Props",
+    component: ViewProps,
   },
   {
-    name: "Linear Chart Events",
-    text: "🔥 Linear Chart Events",
-    component: LinearChartEvents,
+    name: "View Events",
+    text: "🔥 View Events",
+    component: ViewEvents,
   },
   {
-    name: "Linear Chart View Functions",
-    text: "🏞️ Linear Chart View Functions",
-    component: LinearChartViewFunctions,
+    name: "View Functions",
+    text: "🏞️ View Functions",
+    component: ViewEvents,
   },
   {
     name: "Classes and Shared Objects",

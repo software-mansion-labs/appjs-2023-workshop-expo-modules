@@ -5,7 +5,7 @@ import React from "react";
 
 import Button from "../components/Button";
 
-export default function () {
+export default function AcrivityContracts() {
   return (
     <View
       style={{
