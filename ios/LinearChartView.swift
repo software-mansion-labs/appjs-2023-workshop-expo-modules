@@ -28,21 +28,7 @@ class LinearChartView: ExpoView, ChartViewDelegate, Observer {
   public required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
 
-    chartView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    chartView.pinchZoomEnabled = true
-    chartView.setVisibleXRangeMaximum(10)
-    chartView.setVisibleXRangeMinimum(1)
-    chartView.animate(xAxisDuration: 0.2)
-
-    chartView.backgroundColor = Colors.background
-    chartView.legend.textColor = Colors.primary
-    chartView.rightAxis.labelTextColor = Colors.text
-    chartView.leftAxis.labelTextColor = Colors.text
-    chartView.xAxis.labelTextColor = Colors.text
-    chartView.gridBackgroundColor = Colors.secondBackground
-    chartView.xAxis.labelFont = chartView.xAxis.labelFont.withSize(12)
-    chartView.rightAxis.labelFont = chartView.rightAxis.labelFont.withSize(12)
-    chartView.leftAxis.labelFont = chartView.leftAxis.labelFont.withSize(12)
+    chartView.applyDefaultSettings()
 
     chartView.delegate = self
 
@@ -55,13 +41,13 @@ class LinearChartView: ExpoView, ChartViewDelegate, Observer {
       label: series.label
     )
 
-    dataSet.colors = [Colors.primary]
-    dataSet.valueTextColor = Colors.text
+    dataSet.applyDefaultSettings()
+
     dataSet.valueFont = dataSet.valueFont.withSize(series.textSize)
     dataSet.lineWidth = series.lineWidth
     dataSet.mode = series.mode.toLineDataSetMode()
     
-    applyNewData(dataSet: dataSet)
+    chartView.applyNewData(dataSet: dataSet)
   }
 
   func setTouchEnabled(_ value: Bool) {
@@ -117,15 +103,6 @@ class LinearChartView: ExpoView, ChartViewDelegate, Observer {
   }
 
   func dataWasUpdated(newDataSet: LineChartDataSet) {
-    applyNewData(dataSet: newDataSet)
-  }
-
-  private func applyNewData(dataSet: LineChartDataSet) {
-    chartView.data = LineChartData(dataSet: dataSet)
-
-    chartView.setVisibleXRangeMaximum(10)
-    chartView.setVisibleXRangeMinimum(1)
-
-    chartView.notifyDataSetChanged()
+    chartView.applyNewData(dataSet: newDataSet)
   }
 }

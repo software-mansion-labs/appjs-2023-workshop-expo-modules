@@ -38,7 +38,7 @@ const Toggle = ({
   </View>
 );
 
-export default function () {
+export default function ViewProps() {
   const [touchEnabled, setTouchEnabled] = React.useState(false);
   const [legendEnabled, setLegendEnabled] = React.useState(false);
 

@@ -109,7 +109,11 @@ public class ChartsModule: Module {
       }
 
       AsyncFunction("modifyPropertyAsync") { (this: JavaScriptObject, promise: Promise) in
-        appContext!.executeOnJavaScriptThread {
+        guard let context = appContext else {
+          throw Exceptions.AppContextLost()
+        }
+
+        context.executeOnJavaScriptThread {
           let p = this.getProperty("property").getInt()
           this.setProperty("property", value: p * p)
           promise.resolve()

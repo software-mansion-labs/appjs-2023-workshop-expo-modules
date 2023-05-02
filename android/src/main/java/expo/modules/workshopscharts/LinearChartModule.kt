@@ -1,7 +1,6 @@
 package expo.modules.workshopscharts
 
 import android.Manifest
-import android.graphics.Color
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.LineDataSet.Mode
@@ -19,6 +18,7 @@ import expo.modules.kotlin.records.Required
 import expo.modules.kotlin.sharedobjects.SharedObject
 import expo.modules.kotlin.typedarray.Uint8Array
 import expo.modules.kotlin.types.Enumerable
+import expo.modules.workshopscharts.Utils.applyDefaultSettings
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -70,8 +70,6 @@ class UserRejectedPermissionsException : CodedException(
   message = "User rejected permissions"
 )
 
-typealias ListenerType = (newLineDataSet: LineDataSet) -> Unit
-
 class SharedDataSetOptions : Record {
   @Field
   val mode: DataMode = DataMode.LINEAR
@@ -80,8 +78,15 @@ class SharedDataSetOptions : Record {
   val lineWidth: Float = 5f
 }
 
-class SharedDataSet(initValues: Uint8Array? = null, options: SharedDataSetOptions? = null) : SharedObject() {
-  private val listeners = mutableListOf<ListenerType>()
+class SharedDataSet(
+  initValues: Uint8Array? = null,
+  options: SharedDataSetOptions? = null
+) : SharedObject() {
+  fun interface Listener {
+    fun onNewData(newDataSet: LineDataSet)
+  }
+
+  private val listeners = mutableListOf<Listener>()
 
   private val dataSet = LineDataSet(
     initValues
@@ -92,24 +97,26 @@ class SharedDataSet(initValues: Uint8Array? = null, options: SharedDataSetOption
       ?.toMutableList() ?: mutableListOf<Entry?>(),
     "label"
   ).also {
-    it.mode = options?.mode?.toLineDataSetMode() ?: Mode.CUBIC_BEZIER
-    it.colors = listOf(Colors.primary)
-    it.lineWidth = options?.lineWidth ?: 10f
-    it.valueTextColor = Colors.text
-    it.valueTextSize = 12f
+    it.applyDefaultSettings()
+    options?.mode?.toLineDataSetMode()?.let { mode->
+      it.mode = mode
+    }
+    options?.lineWidth?.let { lineWidth ->
+      it.lineWidth = lineWidth
+    }
   }
 
   internal var transformer: JavaScriptFunction<Float>? = null
 
-  fun addListener(newDataListener: ListenerType) {
+  fun addListener(newDataListener: Listener) {
     listeners.add(newDataListener)
 
     if (dataSet.entryCount != 0) {
-      newDataListener.invoke(dataSet)
+      newDataListener.onNewData(dataSet)
     }
   }
 
-  fun removeListener(listener: ListenerType?) {
+  fun removeListener(listener: Listener?) {
     if (listener == null) {
       return
     }
@@ -123,7 +130,7 @@ class SharedDataSet(initValues: Uint8Array? = null, options: SharedDataSetOption
         value
       )
     )
-    listeners.forEach { it(dataSet) }
+    listeners.forEach { it.onNewData(dataSet) }
   }
 }
 
@@ -142,7 +149,7 @@ class LinearChartModule : Module() {
     Name("LinearChart")
 
     OnCreate {
-      com.github.mikephil.charting.utils.Utils.init(appContext.reactContext!!)
+      Utils.initCharts(appContext)
     }
 
     OnDestroy {

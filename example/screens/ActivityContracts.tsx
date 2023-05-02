@@ -6,15 +6,6 @@ import React from "react";
 import Button from "../components/Button";
 
 export default function () {
-  const [isModalVisible, setIsModalVisible] = React.useState(false);
-  const [functionBody, setFunctionBody] = React.useState("");
-  const [expectedOutput, setExpectedOutput] = React.useState<any | null>(null);
-
-  const showModal = (functionBody: string, expectedOutput: any | null) => {
-    setFunctionBody(functionBody);
-    setExpectedOutput(expectedOutput);
-    setIsModalVisible(true);
-  };
   return (
     <View
       style={{

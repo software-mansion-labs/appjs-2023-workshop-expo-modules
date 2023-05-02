@@ -10,7 +10,7 @@ const data = [...Array(10).keys()].map((v, i) => ({
   y: getRandomInt(10),
 }));
 
-export default function () {
+export default function ViewEvents() {
   const [onDataSelectEvent, setOnDataSelect] = React.useState<string | null>(
     null
   );

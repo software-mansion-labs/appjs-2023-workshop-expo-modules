@@ -13,7 +13,7 @@ import Button from "../components/Button";
 
 export default function () {
   const [dataSet, setDataSet] = React.useState<SharedDataSet>(
-    new LinearChartModule.SharedDataSet()
+    () => new LinearChartModule.SharedDataSet()
   );
 
   const chartRef = React.useCallback<

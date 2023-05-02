@@ -14,7 +14,7 @@ const data = [...Array(100).keys()].map((v, i) => ({
   y: getRandomInt(10),
 }));
 
-export default function () {
+export default function ViewFunctions() {
   const chart = React.useRef<LinearChartViewRef>(null);
 
   return (

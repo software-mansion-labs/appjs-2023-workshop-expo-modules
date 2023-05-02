@@ -20,14 +20,21 @@ import expo.modules.kotlin.modules.ModuleDefinition
 import expo.modules.kotlin.objects.Object
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
+import expo.modules.kotlin.records.Required
 import expo.modules.kotlin.sharedobjects.SharedObject
 import kotlin.math.sqrt
 
-class InvalidSizeException : CodedException(message = "Provided size was invalid")
+class InvalidSizeException : CodedException(
+  message = "Provided size was invalid"
+)
 
 data class Point(
-  @Field val x: Double,
-  @Field val y: Double
+  @Field
+  @Required
+  val x: Double,
+  @Field
+  @Required
+  val y: Double
 ) : Record
 
 class SharedList<T> : SharedObject() {
@@ -105,7 +112,7 @@ class ChartsModule : Module() {
     }
 
     Function("callJSFunction") { jsFunction: JavaScriptFunction<Double> ->
-      return@Function jsFunction.invoke(100, 200)
+      return@Function jsFunction(100, 200)
     }
 
     AsyncFunction("objectSummary") { jsObject: Map<String, Any> ->
@@ -113,7 +120,7 @@ class ChartsModule : Module() {
     }
 
     Events("onNewData")
-  
+
     AsyncFunction("sendOnNewDataEvent") {
       sendEvent("onNewData", mapOf(
         "value" to 123,
@@ -168,7 +175,7 @@ class ChartsModule : Module() {
       }
 
       Function("createAnonymousObject") {
-        Object {
+        return@Function Object {
           Function("calculate") { a: Int, b: Int, c: Int ->
             a + b + c
           }

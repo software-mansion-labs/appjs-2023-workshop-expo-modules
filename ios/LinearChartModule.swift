@@ -67,11 +67,15 @@ internal class SharedDataSet : SharedObject {
       }
     }
 
-    dataSet.mode = options?.mode.toLineDataSetMode() ?? .cubicBezier
-    dataSet.colors = [Colors.primary]
-    dataSet.lineWidth = options?.lineWidth ?? 10
-    dataSet.valueTextColor = Colors.text
-    dataSet.valueFont = dataSet.valueFont.withSize(12)
+    dataSet.applyDefaultSettings()
+
+    if let mode = options?.mode.toLineDataSetMode() {
+      dataSet.mode = mode
+    }
+
+    if let lineWidth = options?.lineWidth {
+      dataSet.lineWidth = lineWidth
+    }
 
     super.init()
   }

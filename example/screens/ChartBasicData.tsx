@@ -52,7 +52,7 @@ const Options = <T extends ValueType>({
   </View>
 );
 
-export default function () {
+export default function ChartBasicData() {
   const [dataMode, setDataMode] = React.useState(DataMode.LINEAR);
   const [fontSize, setFontSize] = React.useState(10);
   const [lineWidth, setLineWidth] = React.useState(5);

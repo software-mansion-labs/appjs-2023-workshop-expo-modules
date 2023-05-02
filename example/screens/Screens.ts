@@ -7,8 +7,10 @@ import NativeModule from "./NativeModule";
 import SharedDataSet from "./SharedDataSet";
 import SharedObjects from "./SharedObjects";
 import ActivityContracts from "./ActivityContracts";
+import FirstSteps from "./FirstSteps";
 
 export const screens = [
+  { name: "First steps", text: "👶 First steps", component: FirstSteps },
   { name: "Native Module", text: "⚙️ Native Module", component: NativeModule },
   {
     name: "Linear Chart Basic Data",

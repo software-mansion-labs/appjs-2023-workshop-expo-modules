@@ -25,7 +25,7 @@ function ScreenLink({ name, text }: ScreenLinkData) {
   );
 }
 
-export default function () {
+export default function Home() {
   const keyExtractor = React.useCallback(
     (item: ScreenLinkData) => item.name,
     []

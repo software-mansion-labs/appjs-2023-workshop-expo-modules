@@ -127,7 +127,7 @@ return Charts.x;`,
   },
 ];
 
-export default function () {
+export default function NativeModule() {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [functionBody, setFunctionBody] = React.useState("");
   const [expectedOutput, setExpectedOutput] = React.useState<any | null>(null);
