@@ -1,10 +1,15 @@
 {
   "platforms": ["ios", "android"],
   "ios": {
-    "modules": ["ChartsModule", "LinearChartModule"]
+    "modules": [
+      "FirstModule", 
+      "ChartsModule",
+      "LinearChartModule"
+    ]
   },
   "android": {
     "modules": [
+      "expo.modules.workshopscharts.FirstModule",
       "expo.modules.workshopscharts.ChartsModule", 
       "expo.modules.workshopscharts.LinearChartModule"
     ]    

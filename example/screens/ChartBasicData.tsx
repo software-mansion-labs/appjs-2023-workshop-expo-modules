@@ -88,12 +88,6 @@ export default function ChartBasicData() {
         }}
       >
         <Options
-          text="Data Mode:"
-          items={dataModes}
-          current={dataMode}
-          setValue={setDataMode}
-        />
-        <Options
           text="Font size:"
           items={fontSizes}
           current={fontSize}
@@ -104,6 +98,12 @@ export default function ChartBasicData() {
           items={lineWidths}
           current={lineWidth}
           setValue={setLineWidth}
+        />
+        <Options
+          text="Data Mode:"
+          items={dataModes}
+          current={dataMode}
+          setValue={setDataMode}
         />
       </View>
     </ScrollView>

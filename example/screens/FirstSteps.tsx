@@ -18,7 +18,10 @@ export default function () {
           title="Check if module exists"
           onPress={() => {
             const module = requireNativeModule("FirstModule");
-            Alert.alert("NativeModule", JSON.stringify(module));
+            Alert.alert(
+              "NativeModule",
+              JSON.stringify(Object.keys(module), null, 2)
+            );
           }}
         />
       </View>

@@ -15,6 +15,7 @@ type AllowTypes =
   | undefined;
 
 export type FunctionTestCaseProps = {
+  id: number;
   title: string;
   function: () => Promise<AllowTypes> | AllowTypes;
   correctOutput?: AllowTypes;
@@ -69,7 +70,9 @@ export default function FunctionTestCase(props: FunctionTestCaseProps) {
           borderBottomColor: Colors.secondBackground,
         }}
       >
-        <Text style={{ color: Colors.text }}>🚀 {props.title}</Text>
+        <Text style={{ color: Colors.text }}>
+          {props.id}. {props.title} 🚀
+        </Text>
 
         {result && (
           <MonoText>

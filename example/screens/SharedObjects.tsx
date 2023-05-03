@@ -7,7 +7,7 @@ import Colors from "../Colors";
 import React from "react";
 import TestDetails from "../components/TestDetails";
 
-const testCases: Omit<FunctionTestCaseProps, "showModal">[] = [
+const testCases: Omit<FunctionTestCaseProps, "showModal" | "id">[] = [
   {
     title: "Exports simple class",
     function: () => new Charts.Class().constructor.name,
@@ -133,8 +133,13 @@ export default function () {
 
       <ScrollView>
         <View>
-          {testCases.map((e) => (
-            <FunctionTestCase {...e} key={e.title} showModal={showModal} />
+          {testCases.map((e, index) => (
+            <FunctionTestCase
+              {...e}
+              id={index + 1}
+              key={e.title}
+              showModal={showModal}
+            />
           ))}
         </View>
       </ScrollView>

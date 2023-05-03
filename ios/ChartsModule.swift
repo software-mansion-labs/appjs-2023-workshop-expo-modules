@@ -7,10 +7,10 @@ internal class InvalidSizeException : Exception {
 }
 
 internal struct Point: Record {
-  @Field
+  @Field(.required)
   var x: Double
 
-  @Field
+  @Field(.required)
   var y: Double
 }
 
