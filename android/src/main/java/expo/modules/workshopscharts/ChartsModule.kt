@@ -1,7 +1,16 @@
 package expo.modules.workshopscharts
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
 import expo.modules.kotlin.Promise
+import expo.modules.kotlin.activityresult.AppContextActivityResultContract
+import expo.modules.kotlin.activityresult.AppContextActivityResultLauncher
 import expo.modules.kotlin.exception.CodedException
+import expo.modules.kotlin.functions.Coroutine
 import expo.modules.kotlin.jni.JavaScriptFunction
 import expo.modules.kotlin.jni.JavaScriptObject
 import expo.modules.kotlin.jni.JavaScriptValue
@@ -13,6 +22,25 @@ import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Required
 import expo.modules.kotlin.sharedobjects.SharedObject
 import kotlin.math.sqrt
+
+class PickRingtoneContract : AppContextActivityResultContract<Int, Uri?> {
+  override fun createIntent(context: Context, input: Int) =
+    Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
+      putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, input)
+    }
+
+  override fun parseResult(input: Int, resultCode: Int, intent: Intent?): Uri? {
+    if (resultCode != Activity.RESULT_OK) {
+      return null
+    }
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      intent?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI, Uri::class.java)
+    } else {
+      @Suppress("DEPRECATION")
+      intent?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
+    }
+  }
+}
 
 class SharedList<T> : SharedObject() {
   private val data = mutableListOf<T>()
@@ -44,6 +72,8 @@ data class Point(
 
 class ChartsModule : Module() {
   var x = -1.0
+
+  private lateinit var pickRingtone: AppContextActivityResultLauncher<Int, Uri?>
 
   override fun definition() = ModuleDefinition {
     Name("Charts")
@@ -103,6 +133,15 @@ class ChartsModule : Module() {
     Property("x")
       .get { x }
       .set { newValue: Double -> x = newValue * newValue }
+
+    RegisterActivityContracts {
+      pickRingtone = registerForActivityResult(PickRingtoneContract())
+    }
+
+    AsyncFunction("pickRingtone") Coroutine { ->
+      val result = pickRingtone.launch(RingtoneManager.TYPE_ALL)
+      result
+    }
 
     Class("Class") {
       Constructor { self: JavaScriptObject, value: Int? ->
