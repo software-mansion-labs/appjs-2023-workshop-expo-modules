@@ -27,7 +27,11 @@ class LinearChartModule : Module() {
     }
 
     View(LinearChartView::class) {
-
+      Prop("data") { view: LinearChartView, series: LinearDataSeries? ->
+        if (series != null) {
+          view.setSeries(series)
+        }
+      }
     }
   }
 }

@@ -11,4 +11,15 @@ class LinearChartView: ExpoView {
 
     addSubview(chartView)
   }
+
+  func setSeries(_ series: LinearDataSeries) {
+    let dataSet = LineChartDataSet(
+      entries: series.values.map { ChartDataEntry(x: $0.x, y: $0.y) },
+      label: "label"
+    )
+
+    dataSet.applyDefaultSettings()
+
+    chartView.applyNewData(dataSet: dataSet)
+  }
 }
