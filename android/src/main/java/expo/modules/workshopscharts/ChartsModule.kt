@@ -90,6 +90,11 @@ class ChartsModule : Module() {
       Constructor { self: JavaScriptObject, value: Int? ->
         self.setProperty("property", value ?: 10)
       }
+
+      Function("modifyProperty") { self: JavaScriptObject ->
+        val p = self.getProperty("property").getInt()
+        self.setProperty("property", p * p)
+      }
     }
   }
 }
