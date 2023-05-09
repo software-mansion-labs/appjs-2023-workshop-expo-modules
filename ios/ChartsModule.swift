@@ -53,5 +53,13 @@ public class ChartsModule: Module {
     AsyncFunction("objectSummary") { (jsObject: [String: Any]) in
       return jsObject.description
     }
+
+    Events("onNewData")
+
+    AsyncFunction("sendOnNewDataEvent") {
+      sendEvent("onNewData", [
+        "value": 123,
+      ])
+    }
   }
 }
