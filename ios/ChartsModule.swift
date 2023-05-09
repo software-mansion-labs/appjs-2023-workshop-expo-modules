@@ -45,5 +45,9 @@ public class ChartsModule: Module {
     Function("modifyJSObject") { (jsObject: JavaScriptObject) in
       jsObject.setProperty("expo", value: "is awesome")
     }
+    
+    Function("callJSFunction") { (jsFunction: JavaScriptFunction<Double>) in
+      return try jsFunction.call(100, 200)
+    }
   }
 }

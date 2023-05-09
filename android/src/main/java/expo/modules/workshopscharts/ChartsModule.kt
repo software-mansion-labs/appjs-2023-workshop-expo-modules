@@ -1,6 +1,7 @@
 package expo.modules.workshopscharts
 
 import expo.modules.kotlin.exception.CodedException
+import expo.modules.kotlin.jni.JavaScriptFunction
 import expo.modules.kotlin.jni.JavaScriptObject
 import expo.modules.kotlin.jni.JavaScriptValue
 import expo.modules.kotlin.modules.Module
@@ -44,6 +45,10 @@ class ChartsModule : Module() {
 
     Function("modifyJSObject") { jsObject: JavaScriptObject ->
       jsObject.setProperty("expo", "is awesome")
+    }
+
+    Function("callJSFunction") { jsFunction: JavaScriptFunction<Double> ->
+      return@Function jsFunction(100, 200)
     }
   }
 }
