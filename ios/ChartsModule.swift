@@ -15,6 +15,8 @@ internal struct Point: Record {
 }
 
 public class ChartsModule: Module {
+  var x = -1.0
+
   public func definition() -> ModuleDefinition {
     Name("Charts")
 
@@ -73,5 +75,9 @@ public class ChartsModule: Module {
     Function("calculateDistance") { (p1: Point, p2: Point) in
       return sqrt((p1.y - p2.y) * (p1.y - p2.y) + (p1.x - p2.x) * (p1.x - p2.x))
     }
+
+    Property("x")
+      .get { self.x }
+      .set { (newValue: Double) in self.x = newValue * newValue }
   }
 }

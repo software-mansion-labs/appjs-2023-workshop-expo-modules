@@ -25,6 +25,8 @@ data class Point(
 ) : Record
 
 class ChartsModule : Module() {
+  var x = -1.0
+
   override fun definition() = ModuleDefinition {
     Name("Charts")
 
@@ -79,5 +81,9 @@ class ChartsModule : Module() {
     Function("calculateDistance") { p1: Point, p2: Point ->
       sqrt((p1.y - p2.y) * (p1.y - p2.y) + (p1.x - p2.x) * (p1.x - p2.x))
     }
+
+    Property("x")
+      .get { x }
+      .set { newValue: Double -> x = newValue * newValue }
   }
 }
