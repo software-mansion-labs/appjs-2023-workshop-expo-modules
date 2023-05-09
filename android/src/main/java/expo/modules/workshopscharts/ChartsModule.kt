@@ -54,5 +54,13 @@ class ChartsModule : Module() {
     AsyncFunction("objectSummary") { jsObject: Map<String, Any> ->
       return@AsyncFunction jsObject.toString()
     }
+
+    Events("onNewData")
+
+    AsyncFunction("sendOnNewDataEvent") {
+      sendEvent("onNewData", mapOf(
+        "value" to 123,
+      ))
+    }
   }
 }
