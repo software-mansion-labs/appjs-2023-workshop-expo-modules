@@ -19,7 +19,11 @@ public class LinearChartModule: Module {
     Name("LinearChart")
 
     View(LinearChartView.self) {
-
+      Prop("data") { (view: LinearChartView, series: LinearDataSeries?) in
+        if let series = series {
+          view.setSeries(series)
+        }
+      }
     }
   }
 }
