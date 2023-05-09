@@ -27,4 +27,10 @@ class LinearChartView: ExpoView {
 
     chartView.applyNewData(dataSet: dataSet)
   }
+
+  func setTouchEnabled(_ value: Bool) {
+    chartView.dragEnabled = value
+    chartView.doubleTapToZoomEnabled = value
+    chartView.pinchZoomEnabled = value
+  }
 }
