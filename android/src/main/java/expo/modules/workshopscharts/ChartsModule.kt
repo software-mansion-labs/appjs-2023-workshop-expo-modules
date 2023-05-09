@@ -14,5 +14,9 @@ class ChartsModule : Module() {
     AsyncFunction("addAsync") { a: Int, b: Int ->
       return@AsyncFunction a + b
     }
+
+    Function("calculateAverage") { data: List<Double> ->
+      return@Function data.average()
+    }
   }
 }
