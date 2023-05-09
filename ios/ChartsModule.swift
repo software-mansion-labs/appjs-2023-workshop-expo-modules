@@ -49,5 +49,9 @@ public class ChartsModule: Module {
     Function("callJSFunction") { (jsFunction: JavaScriptFunction<Double>) in
       return try jsFunction.call(100, 200)
     }
+
+    AsyncFunction("objectSummary") { (jsObject: [String: Any]) in
+      return jsObject.description
+    }
   }
 }
