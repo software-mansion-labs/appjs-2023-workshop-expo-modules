@@ -85,5 +85,9 @@ class ChartsModule : Module() {
     Property("x")
       .get { x }
       .set { newValue: Double -> x = newValue * newValue }
+
+    Class("Class") {
+
+    }
   }
 }
