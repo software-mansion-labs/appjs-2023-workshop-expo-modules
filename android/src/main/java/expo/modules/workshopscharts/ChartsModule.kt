@@ -11,7 +11,23 @@ import expo.modules.kotlin.objects.Object
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Required
+import expo.modules.kotlin.sharedobjects.SharedObject
 import kotlin.math.sqrt
+
+class SharedList<T> : SharedObject() {
+  private val data = mutableListOf<T>()
+
+  val size: Int
+    get() = data.size
+
+  fun add(newElement: T) {
+    data.add(newElement)
+  }
+
+  operator fun get(index: Int): T {
+    return data[index]
+  }
+}
 
 class InvalidSizeException : CodedException(
   message = "Provided size was invalid"
