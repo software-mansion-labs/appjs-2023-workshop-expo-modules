@@ -7,6 +7,7 @@ import expo.modules.kotlin.jni.JavaScriptObject
 import expo.modules.kotlin.jni.JavaScriptValue
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
+import expo.modules.kotlin.objects.Object
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Required
@@ -102,6 +103,14 @@ class ChartsModule : Module() {
           val p = self.getProperty("property").getInt()
           self.setProperty("property", p * p)
           promise.resolve(null)
+        }
+      }
+
+      Function("createAnonymousObject") {
+        return@Function Object {
+          Function("calculate") { a: Int, b: Int, c: Int ->
+            a + b + c
+          }
         }
       }
     }

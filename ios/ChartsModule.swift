@@ -101,6 +101,14 @@ public class ChartsModule: Module {
           promise.resolve()
         }
       }
+
+      Function("createAnonymousObject") {
+        return Object {
+          Function("calculate") { (a: Int, b: Int, c: Int) in
+            a + b + c
+          }
+        }
+      }
     }
   }
 }
