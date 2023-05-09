@@ -5,6 +5,7 @@ class LinearChartView: ExpoView, ChartViewDelegate {
   let chartView = LineChartView(frame: .zero)
 
   var onDataSelect = EventDispatcher()
+  var onScale = EventDispatcher()
 
   public required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -44,13 +45,21 @@ class LinearChartView: ExpoView, ChartViewDelegate {
   }
 
   func chartValueSelected(
-     _ chartView: ChartViewBase,
-     entry: ChartDataEntry,
-     highlight: Highlight
-   ) {
-     onDataSelect([
-       "x": entry.x,
-       "y": entry.y
-     ])
-   }
+    _ chartView: ChartViewBase,
+    entry: ChartDataEntry,
+    highlight: Highlight
+  ) {
+    onDataSelect([
+      "x": entry.x,
+      "y": entry.y
+    ])
+  }
+
+  func chartScaled(_ chartView: ChartViewBase, scaleX: CGFloat, scaleY: CGFloat) {
+    onScale([
+      "scaleX": scaleX,
+      "scaleY": scaleY
+    ])
+  }
 }
+

@@ -72,7 +72,7 @@ class LinearChartModule : Module() {
         view.setLegendEnabled(legendEnabled ?: true)
       }
 
-      Events("onDataSelect")
+      Events("onDataSelect", "onScale")
     }
   }
 }
