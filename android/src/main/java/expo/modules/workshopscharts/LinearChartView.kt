@@ -19,11 +19,13 @@ import kotlinx.coroutines.launch
 class LinearChartView(
   context: Context,
   appContext: AppContext
-) : ExpoView(context, appContext) {
+) : ExpoView(context, appContext), SharedDataSet.Listener {
   private val chartView = LineChart(context)
 
   private val onDataSelect by EventDispatcher<Map<String, Float>>()
   private val onScale by EventDispatcher<Map<String, Float>>()
+
+  private var currentDataSet: SharedDataSet? = null
 
   init {
     chartView.applyDefaultSettings()
@@ -98,5 +100,15 @@ class LinearChartView(
         Utils.saveImage(bitmap, context, "MyApp")
         promise.resolve(null)
       }
+  }
+
+  fun setSharedDataSet(dataset: SharedDataSet) {
+    currentDataSet?.removeListener(this)
+    dataset.addListener(this)
+    currentDataSet = dataset
+  }
+
+  override fun onNewData(newDataSet: LineDataSet) {
+    chartView.applyNewData(newDataSet)
   }
 }

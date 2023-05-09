@@ -1,6 +1,7 @@
 package expo.modules.workshopscharts
 
 import android.Manifest
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import expo.modules.core.errors.ContextDestroyedException
 import expo.modules.interfaces.permissions.PermissionsStatus
@@ -12,12 +13,16 @@ import expo.modules.kotlin.modules.ModuleDefinition
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Required
+import expo.modules.kotlin.sharedobjects.SharedObject
+import expo.modules.kotlin.typedarray.Uint8Array
 import expo.modules.kotlin.types.Enumerable
+import expo.modules.workshopscharts.Utils.applyDefaultSettings
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class UserRejectedPermissionsException : CodedException(
   message = "User rejected permissions"
@@ -63,6 +68,68 @@ class LinearDataSeries : Record {
   val mode: DataMode = DataMode.LINEAR
 }
 
+class SharedDataSetOptions : Record {
+  @Field
+  val mode: DataMode = DataMode.LINEAR
+
+  @Field
+  val lineWidth: Float = 5f
+}
+
+class SharedDataSet(
+  initValues: Uint8Array? = null,
+  options: SharedDataSetOptions? = null
+) : SharedObject() {
+  fun interface Listener {
+    fun onNewData(newDataSet: LineDataSet)
+  }
+
+  private val listeners = mutableListOf<Listener>()
+
+  private val dataSet = LineDataSet(
+    initValues
+      ?.withIndex()
+      ?.map { (index, value) ->
+        Entry((index + 1).toFloat(), value.toFloat())
+      }
+      ?.toMutableList() ?: mutableListOf<Entry?>(),
+    "label"
+  ).also {
+    it.applyDefaultSettings()
+    options?.mode?.toLineDataSetMode()?.let { mode->
+      it.mode = mode
+    }
+    options?.lineWidth?.let { lineWidth ->
+      it.lineWidth = lineWidth
+    }
+  }
+
+  fun addListener(newDataListener: Listener) {
+    listeners.add(newDataListener)
+
+    if (dataSet.entryCount != 0) {
+      newDataListener.onNewData(dataSet)
+    }
+  }
+
+  fun removeListener(listener: Listener?) {
+    if (listener == null) {
+      return
+    }
+    listeners.remove(listener)
+  }
+
+  fun addData(value: Float) {
+    dataSet.addEntry(
+      Entry(
+        (dataSet.entryCount + 1).toFloat(),
+        value
+      )
+    )
+    listeners.forEach { it.onNewData(dataSet) }
+  }
+}
+
 class LinearChartModule : Module() {
 
   private var wasScopedInitialized = false
@@ -85,6 +152,18 @@ class LinearChartModule : Module() {
     OnDestroy {
       if (wasScopedInitialized) {
         moduleScope.cancel(ContextDestroyedException())
+      }
+    }
+
+    Class(SharedDataSet::class) {
+      Constructor { initValues: Uint8Array?, options: SharedDataSetOptions? ->
+        return@Constructor SharedDataSet(initValues, options)
+      }
+
+      Function("add") { sharedObject: SharedDataSet, y: Float ->
+        appContext.mainQueue.launch {
+          sharedObject.addData(y)
+        }
       }
     }
 
@@ -128,6 +207,10 @@ class LinearChartModule : Module() {
 
           view.saveToGallery(promise)
         }, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+      }
+
+      AsyncFunction("setDataSet") { view: LinearChartView, sharedDataSet: SharedDataSet ->
+        view.setSharedDataSet(sharedDataSet)
       }
     }
   }
