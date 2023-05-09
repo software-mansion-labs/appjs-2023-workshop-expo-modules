@@ -73,6 +73,10 @@ class LinearChartModule : Module() {
       }
 
       Events("onDataSelect", "onScale")
+
+      AsyncFunction("moveToStart") { view: LinearChartView ->
+        view.moveToStart()
+      }
     }
   }
 }

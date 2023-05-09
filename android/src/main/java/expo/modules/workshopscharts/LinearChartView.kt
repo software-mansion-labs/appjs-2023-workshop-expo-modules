@@ -10,6 +10,7 @@ import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
 import expo.modules.workshopscharts.Utils.applyDefaultSettings
 import expo.modules.workshopscharts.Utils.applyNewData
+import expo.modules.workshopscharts.Utils.moveTo
 import expo.modules.workshopscharts.Utils.setOnChartScale
 import expo.modules.workshopscharts.Utils.setOnChartValueSelectedListener
 
@@ -69,5 +70,10 @@ class LinearChartView(
   fun setLegendEnabled(value: Boolean) {
     chartView.legend.isEnabled = value
     chartView.invalidate()
+  }
+
+  fun moveToStart() {
+    val dataSet = chartView.data ?: return
+    chartView.moveTo(dataSet.xMin - 1f)
   }
 }
