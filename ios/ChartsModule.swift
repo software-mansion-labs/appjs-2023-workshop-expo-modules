@@ -33,5 +33,9 @@ public class ChartsModule: Module {
       }
       return result
     }
+
+    Constants([
+      "VERY_IMPORTANT_CONSTANT": 2
+    ])
   }
 }

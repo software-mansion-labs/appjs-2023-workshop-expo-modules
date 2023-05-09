@@ -31,5 +31,9 @@ class ChartsModule : Module() {
 
       return@AsyncFunction IntArray(size) { it }
     }
+
+    Constants(
+      "VERY_IMPORTANT_CONSTANT" to 2
+    )
   }
 }
