@@ -33,4 +33,9 @@ class LinearChartView: ExpoView {
     chartView.doubleTapToZoomEnabled = value
     chartView.pinchZoomEnabled = value
   }
+
+  func setLegendEnabled(_ value: Bool) {
+    chartView.legend.enabled = value
+    chartView.setNeedsDisplay()
+  }
 }

@@ -53,6 +53,10 @@ public class LinearChartModule: Module {
       Prop("touchEnabled") { (view: LinearChartView, touchEnabled: Bool?) in
         view.setTouchEnabled(touchEnabled ?? true)
       }
+
+      Prop("legendEnabled") { (view: LinearChartView, legendEnabled: Bool?) in
+        view.setLegendEnabled(legendEnabled ?? true)
+      }
     }
   }
 }
