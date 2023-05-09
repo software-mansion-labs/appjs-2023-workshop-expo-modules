@@ -71,6 +71,10 @@ public class LinearChartModule: Module {
       AsyncFunction("moveToPoint") { (view: LinearChartView, x: Double, y: Double) in
         view.moveToPoint(x, y)
       }
+
+      AsyncFunction("saveToGallery") { (view: LinearChartView, promise: Promise) in
+        view.saveToGallery(promise)
+      }
     }
   }
 }

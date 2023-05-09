@@ -1,6 +1,22 @@
 import ExpoModulesCore
 import Charts
 
+class ImageSaver: NSObject {
+  private let promise: Promise
+
+  init(promise: Promise) {
+    self.promise = promise
+  }
+
+  func writeToPhotoAlbum(image: UIImage) {
+    UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveCompleted), nil)
+  }
+
+  @objc func saveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+    promise.resolve(error == nil)
+  }
+}
+
 class LinearChartView: ExpoView, ChartViewDelegate {
   let chartView = LineChartView(frame: .zero)
 
@@ -67,7 +83,7 @@ class LinearChartView: ExpoView, ChartViewDelegate {
       chartView.moveViewToX(dataSet.xMin - 1)
     }
   }
-  
+
   func moveToEnd() {
     if let dataSet = chartView.data {
       chartView.moveViewToX(dataSet.xMax - 1)
@@ -76,6 +92,14 @@ class LinearChartView: ExpoView, ChartViewDelegate {
 
   func moveToPoint(_ x: Double, _ y: Double) {
     chartView.moveViewTo(xValue: x, yValue: y, axis: .left)
+  }
+
+  func saveToGallery(_ promise: Promise) {
+    if let imageData = chartView.getChartImage(transparent: true) {
+      ImageSaver(promise: promise).writeToPhotoAlbum(image: imageData)
+      return
+    }
+    promise.resolve(false)
   }
 }
 

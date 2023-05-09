@@ -6,6 +6,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import expo.modules.kotlin.AppContext
+import expo.modules.kotlin.Promise
 import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
 import expo.modules.workshopscharts.Utils.applyDefaultSettings
@@ -13,6 +14,7 @@ import expo.modules.workshopscharts.Utils.applyNewData
 import expo.modules.workshopscharts.Utils.moveTo
 import expo.modules.workshopscharts.Utils.setOnChartScale
 import expo.modules.workshopscharts.Utils.setOnChartValueSelectedListener
+import kotlinx.coroutines.launch
 
 class LinearChartView(
   context: Context,
@@ -84,5 +86,17 @@ class LinearChartView(
 
   fun moveToPoint(x: Float, y: Float) {
     chartView.moveTo(x, y)
+  }
+
+  fun saveToGallery(promise: Promise) {
+    appContext
+      .registry
+      .getModule<LinearChartModule>()
+      ?.moduleScope
+      ?.launch {
+        val bitmap = chartView.chartBitmap
+        Utils.saveImage(bitmap, context, "MyApp")
+        promise.resolve(null)
+      }
   }
 }
