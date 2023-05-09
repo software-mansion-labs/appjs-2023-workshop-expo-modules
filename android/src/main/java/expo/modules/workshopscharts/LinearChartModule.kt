@@ -3,8 +3,17 @@ package expo.modules.workshopscharts
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
-class ChartsModule : Module() {
+class LinearChartModule : Module() {
+
   override fun definition() = ModuleDefinition {
-    Name("Charts")
+    Name("LinearChart")
+
+    OnCreate {
+      Utils.initCharts(appContext)
+    }
+
+    View(LinearChartView::class) {
+
+    }
   }
 }
