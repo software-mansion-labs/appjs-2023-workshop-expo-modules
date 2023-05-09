@@ -61,5 +61,11 @@ class LinearChartView: ExpoView, ChartViewDelegate {
       "scaleY": scaleY
     ])
   }
+
+  func moveToStart() {
+    if let dataSet = chartView.data {
+      chartView.moveViewToX(dataSet.xMin - 1)
+    }
+  }
 }
 
