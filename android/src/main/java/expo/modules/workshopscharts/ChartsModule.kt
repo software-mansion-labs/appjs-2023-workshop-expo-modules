@@ -1,6 +1,7 @@
 package expo.modules.workshopscharts
 
 import expo.modules.kotlin.exception.CodedException
+import expo.modules.kotlin.jni.JavaScriptValue
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
@@ -35,5 +36,9 @@ class ChartsModule : Module() {
     Constants(
       "VERY_IMPORTANT_CONSTANT" to 2
     )
+
+    Function("typeOf") { value: JavaScriptValue ->
+      return@Function value.kind()
+    }
   }
 }
