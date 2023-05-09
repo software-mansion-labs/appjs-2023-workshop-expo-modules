@@ -1,5 +1,23 @@
 import ExpoModulesCore
 
+class SharedList : SharedObject {
+  private var data: [Int] = []
+
+  var size: Int {
+    data.count
+  }
+
+  func add(_ newElement: Int) {
+    data.append(newElement)
+  }
+
+  subscript(index: Int) -> Int {
+    get {
+      return data[index]
+    }
+  }
+}
+
 internal class InvalidSizeException : Exception {
   override var reason: String {
     "Provided size was invalid"
