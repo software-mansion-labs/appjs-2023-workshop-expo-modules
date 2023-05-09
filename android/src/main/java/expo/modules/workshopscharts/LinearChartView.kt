@@ -27,11 +27,14 @@ class LinearChartView(
   fun setSeries(series: LinearDataSeries) {
     val dataSet = LineDataSet(
       series.values.map { Entry(it.x, it.y) },
-      "label"
+      series.label
     )
 
     dataSet.apply {
       applyDefaultSettings()
+
+      valueTextSize = series.textSize
+      lineWidth = series.lineWidth
     }
 
     chartView.applyNewData(dataSet)
