@@ -17,11 +17,13 @@ class ImageSaver: NSObject {
   }
 }
 
-class LinearChartView: ExpoView, ChartViewDelegate {
+class LinearChartView: ExpoView, ChartViewDelegate, Observer {
   let chartView = LineChartView(frame: .zero)
 
   var onDataSelect = EventDispatcher()
   var onScale = EventDispatcher()
+
+  var currentDataSet: SharedDataSet? = nil
 
   public required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -100,6 +102,16 @@ class LinearChartView: ExpoView, ChartViewDelegate {
       return
     }
     promise.resolve(false)
+  }
+
+  func setDataSet(dataSet: SharedDataSet) {
+    currentDataSet?.removeListener(listener: self)
+    dataSet.addListener(newDataListener: self)
+    currentDataSet = dataSet
+  }
+
+  func dataWasUpdated(newDataSet: LineChartDataSet) {
+    chartView.applyNewData(dataSet: newDataSet)
   }
 }
 
