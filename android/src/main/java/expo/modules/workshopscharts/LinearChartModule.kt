@@ -15,6 +15,16 @@ class LinearDataSeries : Record {
   @Field
   @Required
   val values: List<DataEntry> = emptyList()
+
+  @Field
+  @Required
+  val label: String = ""
+
+  @Field
+  val lineWidth: Float = 5f
+
+  @Field
+  val textSize: Float = 10f
 }
 
 class LinearChartModule : Module() {

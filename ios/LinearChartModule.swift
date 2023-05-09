@@ -12,6 +12,15 @@ struct DataEntry : Record {
 struct LinearDataSeries : Record {
   @Field(.required)
   var values: [DataEntry]
+
+  @Field
+  var label: String
+
+  @Field
+  var lineWidth = 5.0
+
+  @Field
+  var textSize = 10.0
 }
 
 public class LinearChartModule: Module {

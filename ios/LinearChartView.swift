@@ -20,6 +20,9 @@ class LinearChartView: ExpoView {
 
     dataSet.applyDefaultSettings()
 
+    dataSet.valueFont = dataSet.valueFont.withSize(series.textSize)
+    dataSet.lineWidth = series.lineWidth
+
     chartView.applyNewData(dataSet: dataSet)
   }
 }
