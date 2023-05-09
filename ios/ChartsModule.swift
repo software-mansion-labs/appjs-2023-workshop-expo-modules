@@ -37,5 +37,9 @@ public class ChartsModule: Module {
     Constants([
       "VERY_IMPORTANT_CONSTANT": 2
     ])
+
+    Function("typeOf") { (value: JavaScriptValue) in
+      return value.kind.rawValue
+    }
   }
 }
