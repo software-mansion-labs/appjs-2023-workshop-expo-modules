@@ -41,4 +41,8 @@ class LinearChartView(
 
     chartView.applyNewData(dataSet)
   }
+
+  fun setTouchEnabled(value: Boolean) {
+    chartView.setTouchEnabled(value)
+  }
 }

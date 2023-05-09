@@ -49,6 +49,10 @@ public class LinearChartModule: Module {
           view.setSeries(series)
         }
       }
+
+      Prop("touchEnabled") { (view: LinearChartView, touchEnabled: Bool?) in
+        view.setTouchEnabled(touchEnabled ?? true)
+      }
     }
   }
 }
