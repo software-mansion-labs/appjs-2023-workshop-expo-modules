@@ -1,12 +1,27 @@
 package expo.modules.workshopscharts
 
+import android.Manifest
 import com.github.mikephil.charting.data.LineDataSet
+import expo.modules.core.errors.ContextDestroyedException
+import expo.modules.interfaces.permissions.PermissionsStatus
+import expo.modules.kotlin.Promise
+import expo.modules.kotlin.exception.CodedException
+import expo.modules.kotlin.exception.Exceptions
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Required
 import expo.modules.kotlin.types.Enumerable
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+
+class UserRejectedPermissionsException : CodedException(
+  message = "User rejected permissions"
+)
 
 enum class DataMode(val value: Int) : Enumerable {
   LINEAR(0),
@@ -50,11 +65,27 @@ class LinearDataSeries : Record {
 
 class LinearChartModule : Module() {
 
+  private var wasScopedInitialized = false
+  internal val moduleScope by lazy {
+    wasScopedInitialized = true
+    CoroutineScope(
+      Dispatchers.IO +
+        SupervisorJob() +
+        CoroutineName("LinearChartModuleScope")
+    )
+  }
+
   override fun definition() = ModuleDefinition {
     Name("LinearChart")
 
     OnCreate {
       Utils.initCharts(appContext)
+    }
+
+    OnDestroy {
+      if (wasScopedInitialized) {
+        moduleScope.cancel(ContextDestroyedException())
+      }
     }
 
     View(LinearChartView::class) {
@@ -84,6 +115,19 @@ class LinearChartModule : Module() {
 
       AsyncFunction("moveToPoint") { view: LinearChartView, x: Float, y: Float ->
         view.moveToPoint(x, y)
+      }
+
+      AsyncFunction("saveToGallery") { view: LinearChartView, promise: Promise ->
+        val permissionManager = appContext.permissions
+          ?: throw Exceptions.MissingPermissions()
+        permissionManager.askForPermissions({ result ->
+          if (result[Manifest.permission.WRITE_EXTERNAL_STORAGE]?.status != PermissionsStatus.GRANTED) {
+            promise.reject(UserRejectedPermissionsException())
+            return@askForPermissions
+          }
+
+          view.saveToGallery(promise)
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE)
       }
     }
   }
