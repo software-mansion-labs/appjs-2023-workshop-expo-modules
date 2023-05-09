@@ -67,5 +67,15 @@ class LinearChartView: ExpoView, ChartViewDelegate {
       chartView.moveViewToX(dataSet.xMin - 1)
     }
   }
+  
+  func moveToEnd() {
+    if let dataSet = chartView.data {
+      chartView.moveViewToX(dataSet.xMax - 1)
+    }
+  }
+
+  func moveToPoint(_ x: Double, _ y: Double) {
+    chartView.moveViewTo(xValue: x, yValue: y, axis: .left)
+  }
 }
 

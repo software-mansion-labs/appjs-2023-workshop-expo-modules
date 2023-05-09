@@ -63,6 +63,14 @@ public class LinearChartModule: Module {
       AsyncFunction("moveToStart") { (view: LinearChartView) in
         view.moveToStart()
       }
+
+      AsyncFunction("moveToEnd") { (view: LinearChartView) in
+        view.moveToEnd()
+      }
+
+      AsyncFunction("moveToPoint") { (view: LinearChartView, x: Double, y: Double) in
+        view.moveToPoint(x, y)
+      }
     }
   }
 }
