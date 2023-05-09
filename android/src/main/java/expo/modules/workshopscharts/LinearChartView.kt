@@ -45,4 +45,9 @@ class LinearChartView(
   fun setTouchEnabled(value: Boolean) {
     chartView.setTouchEnabled(value)
   }
+
+  fun setLegendEnabled(value: Boolean) {
+    chartView.legend.isEnabled = value
+    chartView.invalidate()
+  }
 }
