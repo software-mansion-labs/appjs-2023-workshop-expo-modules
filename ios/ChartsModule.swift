@@ -81,7 +81,9 @@ public class ChartsModule: Module {
       .set { (newValue: Double) in self.x = newValue * newValue }
 
     Class("Class") {
-
+      Constructor { (this: JavaScriptObject, value: Int?) in
+        this.setProperty("property", value: value ?? 10)
+      }
     }
   }
 }
