@@ -2,7 +2,7 @@ import { View, Alert, StyleSheet } from "react-native";
 import React from "react";
 import Colors from "../Colors";
 import Button from "../components/Button";
-import { requireNativeModule } from "expo-modules-core";
+import { FirstModule } from "workshops-charts";
 
 export default function () {
   return (
@@ -17,10 +17,9 @@ export default function () {
         <Button
           title="Check if module exists"
           onPress={() => {
-            const module = requireNativeModule("FirstModule");
             Alert.alert(
               "NativeModule",
-              JSON.stringify(Object.keys(module), null, 2)
+              JSON.stringify(Object.keys(FirstModule), null, 2)
             );
           }}
         />
@@ -30,8 +29,7 @@ export default function () {
         <Button
           title="Run async function"
           onPress={async () => {
-            const module = requireNativeModule("FirstModule");
-            const result = await module.functionAsync();
+            const result = await FirstModule.functionAsync();
             Alert.alert("NativeModule", JSON.stringify(result));
           }}
         />
@@ -41,8 +39,7 @@ export default function () {
         <Button
           title="Run sync function"
           onPress={() => {
-            const module = requireNativeModule("FirstModule");
-            const result = module.function();
+            const result = FirstModule.function();
             Alert.alert("NativeModule", JSON.stringify(result));
           }}
         />

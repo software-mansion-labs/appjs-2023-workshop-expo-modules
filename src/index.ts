@@ -6,7 +6,10 @@ import LinearChartView, {
 
 import LinearChartModule, { SharedDataSet } from "./LinearChartModule";
 
+import FirstModule from "./FirstModule";
+
 export {
+  FirstModule,
   ChartsModule,
   LinearChartView,
   DataMode,
