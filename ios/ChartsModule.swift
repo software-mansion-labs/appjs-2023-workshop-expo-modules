@@ -128,5 +128,35 @@ public class ChartsModule: Module {
         }
       }
     }
+
+    Class(SharedList.self) {
+      Constructor {
+        return SharedList()
+      }
+
+      Function("add") { (sharedObject: SharedList, newValue: Int) in
+        sharedObject.add(newValue)
+      }
+
+      Function("get") { (sharedObject: SharedList, index: Int) in
+        sharedObject[index]
+      }
+
+      Function("size") { (sharedObject: SharedList) in
+        sharedObject.size
+      }
+
+      AsyncFunction("addAsync") { (sharedObject: SharedList, newValue: Int) in
+        sharedObject.add(newValue)
+      }
+
+      AsyncFunction("getAsync") { (sharedObject: SharedList, index: Int) in
+        sharedObject[index]
+      }
+
+      AsyncFunction("sizeAsync") { (sharedObject: SharedList) in
+        sharedObject.size
+      }
+    }
   }
 }
