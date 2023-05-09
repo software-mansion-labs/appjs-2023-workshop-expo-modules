@@ -1,5 +1,11 @@
 import ExpoModulesCore
 
+internal class InvalidSizeException : Exception {
+  override var reason: String {
+    "Provided size was invalid"
+  }
+}
+
 public class ChartsModule: Module {
   public func definition() -> ModuleDefinition {
     Name("Charts")
@@ -17,6 +23,10 @@ public class ChartsModule: Module {
     }
 
     AsyncFunction("generateDataAsync") { (size: Int) -> [Int] in
+      if size < 0 {
+        throw InvalidSizeException()
+      }
+
       var result: [Int] = []
       for i in 0..<size {
         result.append(i)
