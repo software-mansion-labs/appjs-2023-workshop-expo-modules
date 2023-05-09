@@ -57,6 +57,8 @@ public class LinearChartModule: Module {
       Prop("legendEnabled") { (view: LinearChartView, legendEnabled: Bool?) in
         view.setLegendEnabled(legendEnabled ?? true)
       }
+
+      Events("onDataSelect")
     }
   }
 }

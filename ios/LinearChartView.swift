@@ -1,13 +1,17 @@
 import ExpoModulesCore
 import Charts
 
-class LinearChartView: ExpoView {
+class LinearChartView: ExpoView, ChartViewDelegate {
   let chartView = LineChartView(frame: .zero)
+
+  var onDataSelect = EventDispatcher()
 
   public required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
 
     chartView.applyDefaultSettings()
+
+    chartView.delegate = self
 
     addSubview(chartView)
   }
@@ -38,4 +42,15 @@ class LinearChartView: ExpoView {
     chartView.legend.enabled = value
     chartView.setNeedsDisplay()
   }
+
+  func chartValueSelected(
+     _ chartView: ChartViewBase,
+     entry: ChartDataEntry,
+     highlight: Highlight
+   ) {
+     onDataSelect([
+       "x": entry.x,
+       "y": entry.y
+     ])
+   }
 }
