@@ -84,10 +84,22 @@ public class ChartsModule: Module {
       Constructor { (this: JavaScriptObject, value: Int?) in
         this.setProperty("property", value: value ?? 10)
       }
-      
+
       Function("modifyProperty") { (this: JavaScriptObject) in
         let p = this.getProperty("property").getInt()
         this.setProperty("property", value: p * p)
+      }
+
+      AsyncFunction("modifyPropertyAsync") { (this: JavaScriptObject, promise: Promise) in
+        guard let context = appContext else {
+          throw Exceptions.AppContextLost()
+        }
+
+        context.executeOnJavaScriptThread {
+          let p = this.getProperty("property").getInt()
+          this.setProperty("property", value: p * p)
+          promise.resolve()
+        }
       }
     }
   }
