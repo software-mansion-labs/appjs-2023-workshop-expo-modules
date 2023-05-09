@@ -10,5 +10,9 @@ class ChartsModule : Module() {
     Function("add") { a: Int, b: Int ->
       return@Function a + b
     }
+
+    AsyncFunction("addAsync") { a: Int, b: Int ->
+      return@AsyncFunction a + b
+    }
   }
 }
