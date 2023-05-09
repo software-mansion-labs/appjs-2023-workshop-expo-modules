@@ -130,5 +130,35 @@ class ChartsModule : Module() {
         }
       }
     }
+
+    Class(SharedList::class) {
+      Constructor {
+        return@Constructor SharedList<Int>()
+      }
+
+      Function("add") { sharedObject: SharedList<Int>, newValue: Int ->
+        sharedObject.add(newValue)
+      }
+
+      Function("get") { sharedObject: SharedList<Int>, index: Int ->
+        sharedObject[index]
+      }
+
+      Function("size") { sharedObject: SharedList<Int> ->
+        sharedObject.size
+      }
+
+      AsyncFunction("addAsync") { sharedObject: SharedList<Int>, newValue: Int ->
+        sharedObject.add(newValue)
+      }
+
+      AsyncFunction("getAsync") { sharedObject: SharedList<Int>, index: Int ->
+        sharedObject[index]
+      }
+
+      AsyncFunction("sizeAsync") { sharedObject: SharedList<Int> ->
+        sharedObject.size
+      }
+    }
   }
 }
