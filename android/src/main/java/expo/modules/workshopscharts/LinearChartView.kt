@@ -33,6 +33,8 @@ class LinearChartView(
     dataSet.apply {
       applyDefaultSettings()
 
+      mode = series.mode.toLineDataSetMode()
+
       valueTextSize = series.textSize
       lineWidth = series.lineWidth
     }

@@ -1,10 +1,28 @@
 package expo.modules.workshopscharts
 
+import com.github.mikephil.charting.data.LineDataSet
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Required
+import expo.modules.kotlin.types.Enumerable
+
+enum class DataMode(val value: Int) : Enumerable {
+  LINEAR(0),
+  STEPPED(1),
+  CUBIC_BEZIER(2),
+  HORIZONTAL_BEZIER(3);
+
+  fun toLineDataSetMode(): LineDataSet.Mode {
+    return when (this) {
+      LINEAR -> LineDataSet.Mode.LINEAR
+      STEPPED -> LineDataSet.Mode.STEPPED
+      CUBIC_BEZIER -> LineDataSet.Mode.CUBIC_BEZIER
+      HORIZONTAL_BEZIER -> LineDataSet.Mode.HORIZONTAL_BEZIER
+    }
+  }
+}
 
 data class DataEntry(
   @Field val x: Float,
@@ -25,6 +43,9 @@ class LinearDataSeries : Record {
 
   @Field
   val textSize: Float = 10f
+
+  @Field
+  val mode: DataMode = DataMode.LINEAR
 }
 
 class LinearChartModule : Module() {

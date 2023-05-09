@@ -1,6 +1,19 @@
 import ExpoModulesCore
 import Charts
 
+enum DataMode : Int, Enumerable {
+  case LINEAR = 0, STEPPED, CUBIC_BEZIER, HORIZONTAL_BEZIER
+
+  func toLineDataSetMode() -> LineChartDataSet.Mode {
+    switch self {
+    case .LINEAR: return .linear
+    case .CUBIC_BEZIER: return .cubicBezier
+    case .HORIZONTAL_BEZIER: return .horizontalBezier
+    case .STEPPED: return .stepped
+    }
+  }
+}
+
 struct DataEntry : Record {
   @Field
   var x: Double
@@ -21,6 +34,9 @@ struct LinearDataSeries : Record {
 
   @Field
   var textSize = 10.0
+
+  @Field
+  var mode: DataMode = DataMode.LINEAR
 }
 
 public class LinearChartModule: Module {
