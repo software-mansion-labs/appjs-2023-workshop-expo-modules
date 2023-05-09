@@ -6,10 +6,23 @@ import expo.modules.kotlin.jni.JavaScriptObject
 import expo.modules.kotlin.jni.JavaScriptValue
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
+import expo.modules.kotlin.records.Field
+import expo.modules.kotlin.records.Record
+import expo.modules.kotlin.records.Required
+import kotlin.math.sqrt
 
 class InvalidSizeException : CodedException(
   message = "Provided size was invalid"
 )
+
+data class Point(
+  @Field
+  @Required
+  val x: Double,
+  @Field
+  @Required
+  val y: Double
+) : Record
 
 class ChartsModule : Module() {
   override fun definition() = ModuleDefinition {
@@ -61,6 +74,10 @@ class ChartsModule : Module() {
       sendEvent("onNewData", mapOf(
         "value" to 123,
       ))
+    }
+
+    Function("calculateDistance") { p1: Point, p2: Point ->
+      sqrt((p1.y - p2.y) * (p1.y - p2.y) + (p1.x - p2.x) * (p1.x - p2.x))
     }
   }
 }

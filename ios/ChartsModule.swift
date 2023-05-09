@@ -6,6 +6,14 @@ internal class InvalidSizeException : Exception {
   }
 }
 
+internal struct Point: Record {
+  @Field(.required)
+  var x: Double
+
+  @Field(.required)
+  var y: Double
+}
+
 public class ChartsModule: Module {
   public func definition() -> ModuleDefinition {
     Name("Charts")
@@ -60,6 +68,10 @@ public class ChartsModule: Module {
       sendEvent("onNewData", [
         "value": 123,
       ])
+    }
+
+    Function("calculateDistance") { (p1: Point, p2: Point) in
+      return sqrt((p1.y - p2.y) * (p1.y - p2.y) + (p1.x - p2.x) * (p1.x - p2.x))
     }
   }
 }
