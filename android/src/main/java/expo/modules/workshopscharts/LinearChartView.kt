@@ -10,6 +10,7 @@ import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
 import expo.modules.workshopscharts.Utils.applyDefaultSettings
 import expo.modules.workshopscharts.Utils.applyNewData
+import expo.modules.workshopscharts.Utils.setOnChartScale
 import expo.modules.workshopscharts.Utils.setOnChartValueSelectedListener
 
 class LinearChartView(
@@ -19,6 +20,7 @@ class LinearChartView(
   private val chartView = LineChart(context)
 
   private val onDataSelect by EventDispatcher<Map<String, Float>>()
+  private val onScale by EventDispatcher<Map<String, Float>>()
 
   init {
     chartView.applyDefaultSettings()
@@ -27,6 +29,13 @@ class LinearChartView(
       onDataSelect(mapOf(
         "x" to entry.x,
         "y" to entry.y
+      ))
+    }
+
+    chartView.setOnChartScale { _, scaleX, scaleY ->
+      onScale(mapOf(
+        "scaleX" to scaleX,
+        "scaleY" to scaleY
       ))
     }
 
