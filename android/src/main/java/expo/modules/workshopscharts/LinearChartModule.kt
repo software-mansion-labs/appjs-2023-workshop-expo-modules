@@ -77,6 +77,14 @@ class LinearChartModule : Module() {
       AsyncFunction("moveToStart") { view: LinearChartView ->
         view.moveToStart()
       }
+
+      AsyncFunction("moveToEnd") { view: LinearChartView ->
+        view.moveToEnd()
+      }
+
+      AsyncFunction("moveToPoint") { view: LinearChartView, x: Float, y: Float ->
+        view.moveToPoint(x, y)
+      }
     }
   }
 }

@@ -76,4 +76,13 @@ class LinearChartView(
     val dataSet = chartView.data ?: return
     chartView.moveTo(dataSet.xMin - 1f)
   }
+
+  fun moveToEnd() {
+    val dataSet = chartView.data ?: return
+    chartView.moveTo(dataSet.xMax + 1f)
+  }
+
+  fun moveToPoint(x: Float, y: Float) {
+    chartView.moveTo(x, y)
+  }
 }
