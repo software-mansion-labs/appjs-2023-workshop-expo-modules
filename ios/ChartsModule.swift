@@ -41,5 +41,9 @@ public class ChartsModule: Module {
     Function("typeOf") { (value: JavaScriptValue) in
       return value.kind.rawValue
     }
+
+    Function("modifyJSObject") { (jsObject: JavaScriptObject) in
+      jsObject.setProperty("expo", value: "is awesome")
+    }
   }
 }
