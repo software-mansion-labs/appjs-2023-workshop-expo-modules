@@ -50,5 +50,9 @@ class ChartsModule : Module() {
     Function("callJSFunction") { jsFunction: JavaScriptFunction<Double> ->
       return@Function jsFunction(100, 200)
     }
+
+    AsyncFunction("objectSummary") { jsObject: Map<String, Any> ->
+      return@AsyncFunction jsObject.toString()
+    }
   }
 }
