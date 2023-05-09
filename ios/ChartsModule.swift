@@ -7,5 +7,9 @@ public class ChartsModule: Module {
     Function("add") { (a: Int, b: Int) in
       return a + b
     }
+
+    AsyncFunction("addAsync") { (a: Int, b: Int) in
+      return a + b
+    }
   }
 }
