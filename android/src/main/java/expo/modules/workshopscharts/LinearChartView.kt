@@ -6,9 +6,11 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import expo.modules.kotlin.AppContext
+import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
 import expo.modules.workshopscharts.Utils.applyDefaultSettings
 import expo.modules.workshopscharts.Utils.applyNewData
+import expo.modules.workshopscharts.Utils.setOnChartValueSelectedListener
 
 class LinearChartView(
   context: Context,
@@ -16,8 +18,17 @@ class LinearChartView(
 ) : ExpoView(context, appContext) {
   private val chartView = LineChart(context)
 
+  private val onDataSelect by EventDispatcher<Map<String, Float>>()
+
   init {
     chartView.applyDefaultSettings()
+
+    chartView.setOnChartValueSelectedListener { entry, _ ->
+      onDataSelect(mapOf(
+        "x" to entry.x,
+        "y" to entry.y
+      ))
+    }
 
     addView(chartView, ViewGroup.LayoutParams(
       ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
