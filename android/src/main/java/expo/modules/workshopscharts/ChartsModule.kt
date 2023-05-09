@@ -1,5 +1,6 @@
 package expo.modules.workshopscharts
 
+import expo.modules.kotlin.Promise
 import expo.modules.kotlin.exception.CodedException
 import expo.modules.kotlin.jni.JavaScriptFunction
 import expo.modules.kotlin.jni.JavaScriptObject
@@ -94,6 +95,14 @@ class ChartsModule : Module() {
       Function("modifyProperty") { self: JavaScriptObject ->
         val p = self.getProperty("property").getInt()
         self.setProperty("property", p * p)
+      }
+
+      AsyncFunction("modifyPropertyAsync") { self: JavaScriptObject, promise: Promise ->
+        appContext.executeOnJavaScriptThread {
+          val p = self.getProperty("property").getInt()
+          self.setProperty("property", p * p)
+          promise.resolve(null)
+        }
       }
     }
   }
