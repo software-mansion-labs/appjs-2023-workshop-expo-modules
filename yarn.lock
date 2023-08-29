@@ -2651,10 +2651,10 @@ expo-module-scripts@^3.0.11:
     ts-jest "~29.0.4"
     typescript "^5.1.3"
 
-expo-modules-core@^1.5.10:
-  version "1.5.10"
-  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-1.5.10.tgz#b829ef0c65208870555d604d4602bfe84d0e8bb7"
-  integrity sha512-+m+poHkhjAhRZmngSLUpJJoxhjoExYKSr4J5luy4N+YMlowK31Zewztg4xsPrNRoPvGK/B5uCm0UEzIQvLsNGg==
+expo-modules-core@^1.5.11:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-1.6.0.tgz#39611ed6b24a68a940f3b6e1a00e7e50984f13f9"
+  integrity sha512-xAif9P2voIorfQRIiR6xO6Fpwn8lqwcI1d6ZSXHydKwMySgpPRXOQxCT5Mvmrn1Pi6Q/pry3YTu6H/4i3EU7DA==
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
